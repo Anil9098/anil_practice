@@ -21,6 +21,7 @@ git clone $REPO_URL || { echo "Failed to clone repository"; exit 1; }
 REPO_DIR=$(basename "$REPO_URL" .git)
 cd $REPO_DIR || { echo "Failed to change to directory $REPO_DIR"; exit 1; }
 
+
 # Step 3: Build the Docker image
 echo "Building Docker image with tag $TAG..."
 docker build -t $IMAGE_NAME:$TAG . || { echo "Failed to build Docker image"; exit 1; }
@@ -36,6 +37,14 @@ if [ ! -z "$RUNNING_CONTAINER" ]; then
 else
   echo "No running container found with the name $CONTAINER_NAME."
 fi
+
+
+if [ $(docker ps -a -q -f name=$CONTAINER_NAME) ]; then
+    echo "Container $CONTAINER_NAME exists. Stopping and removing it..."
+    docker stop $CONTAINER_NAME
+    docker rm $CONTAINER_NAME
+fi
+
 
 # Step 5: Run the container with the new image
 echo "Running container $CONTAINER_NAME with image $IMAGE_NAME:$TAG..."
