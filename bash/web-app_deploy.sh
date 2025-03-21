@@ -7,7 +7,13 @@ set -e
 REPO_URL="https://github.com/Anil9098/Calculator-Web-Application.git"
 IMAGE_NAME="web-app"
 DEFAULT_TAG="latest"
-TAG="${1:-$DEFAULT_TAG}"
+
+if [ "$1" == "-t" ]; then
+  TAG="${2:-$DEFAULT_TAG}"
+else
+  TAG="$DEFAULT_TAG"
+fi
+
 CONTAINER_NAME="web-app-container"
 
 show_help() {
