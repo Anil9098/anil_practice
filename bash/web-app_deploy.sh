@@ -21,14 +21,26 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
   show_help
 fi
 
-
 #Output the parameters :
-
 echo "Repository URL: $REPO_URL"
 echo "Docker Image Name: $IMAGE_NAME"
 echo "Docker Image Tag: $TAG"
 echo "Docker Container Name: $CONTAINER_NAME"
 
+echo "Checking Docker is installed or not"
+if ! command -v docker &> /dev/null; then
+  echo "Docker is not installed. Installing Docker"
+
+  sudo apt-get update -y
+  sudo apt-get install -y docker.io
+
+  # Start Docker service
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  echo "Docker installed and started successfully."
+else
+  echo "Docker is already installed."
+fi
 
 #Step 1: Navigate to the project directory
 REPO_DIR=$(basename "$REPO_URL" .git)
