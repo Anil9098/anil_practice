@@ -7,25 +7,33 @@ set -e
 REPO_URL="https://github.com/Anil9098/Calculator-Web-Application.git"
 IMAGE_NAME="web-app"
 DEFAULT_TAG="latest"
-
-if [ "$1" == "-t" ]; then
-  TAG="${2:-$DEFAULT_TAG}"
-else
-  TAG="$DEFAULT_TAG"
-fi
-
 CONTAINER_NAME="web-app-container"
 
 show_help() {
-  echo "Usage: $0 [options] [repo_url] [tag] [container_name]"
-  echo "Tag for the Docker image (default: $DEFAULT_TAG)"
-  exit 0  # Exit after showing help
+
+  echo "Usage: $0 [-t tag] [-h help]"
+  echo " -t Tag        Specify the Docker image (default: $DEFAULT_TAG)"
+  echo " -h,--help     Show the help message"
+  exit 0  
+
 }
 
+while getopts ":t:h" opt; do
+  case ${opt} in
+    t)
+      TAG="$OPTARG"  #Set the tag to the argument passed after -t
+      ;;
+    h)
+      show_help  #Show help and exit
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" 1>&2
+      show_help  # Show help and exit
+      ;;
+  esac
+done
 
-if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-  show_help
-fi
+TAG="${TAG:-$DEFAULT_TAG}"
 
 #Output the parameters :
 echo "Repository URL: $REPO_URL"
@@ -43,14 +51,13 @@ if ! command -v docker &> /dev/null; then
   # Start Docker service
   sudo systemctl start docker
   sudo systemctl enable docker
-  echo "Docker installed and started successfully."
+  echo "Docker installed and started successfully"
 else
-  echo "Docker is already installed."
+  echo "Docker is already installed"
 fi
 
 #Step 1: Navigate to the project directory
 REPO_DIR=$(basename "$REPO_URL" .git)
-
 
 #Step 2: Checking Repository exists or not 
 if [ -d "$REPO_DIR" ]; then
@@ -63,11 +70,10 @@ else
   cd "$REPO_DIR"
 fi
 
-
 #Step 3: Build the Docker image
 echo "Building Docker image with tag $TAG"
 docker build -t $IMAGE_NAME:$TAG . || { echo "Failed to build Docker image"; exit 1; }
-
+              
 
 #Step 4: Check if container is running with the same image
 echo "Checking if container with image $IMAGE_NAME:$TAG is running"
@@ -95,4 +101,8 @@ docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME:$TAG || { echo "Fa
 
 echo "Container $CONTAINER_NAME is now running with image $IMAGE_NAME:$TAG"
 docker ps
+
+
+
+
 
