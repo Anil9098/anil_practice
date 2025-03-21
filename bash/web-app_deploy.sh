@@ -10,6 +10,17 @@ DEFAULT_TAG="latest"
 TAG="${1:-$DEFAULT_TAG}"
 CONTAINER_NAME="web-app-container"
 
+show_help() {
+  echo "Usage: $0 [options] [repo_url] [tag] [container_name]"
+  echo "Tag for the Docker image (default: $DEFAULT_TAG)"
+  exit 0  # Exit after showing help
+}
+
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+  show_help
+fi
+
 
 #Output the parameters :
 
