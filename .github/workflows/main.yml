@@ -21,6 +21,11 @@ jobs:
           #chmod +x example_deployment.sh  # Make sure the script is executable
           ls -la
           ././bash/example_deployment.sh
+
+      - name: print ip
+        run: |
+          ifconfig
+
         
           
 
