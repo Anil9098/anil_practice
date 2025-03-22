@@ -19,9 +19,9 @@ jobs:
       - name: Run Shell Script
         run: |
           #chmod +x example_deployment.sh  # Make sure the script is executable
-          #.bash/example_deployment.sh.sh 
-          # # Run the shell script
           ls -la
+          ./bash/example_deployment.sh.sh
+        
           
 
 
