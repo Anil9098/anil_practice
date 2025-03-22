@@ -18,6 +18,6 @@ jobs:
         
       - name: Run Shell Script
         run: |
-          chmod +x ./example_deployment.sh  # Make sure the script is executable
-          ./example_deployment.sh.sh            # Run the shell script
+          #chmod +x example_deployment.sh  # Make sure the script is executable
+          .bash/example_deployment.sh.sh            # Run the shell script
 
