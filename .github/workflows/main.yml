@@ -25,7 +25,15 @@ jobs:
       - name: print ip
         run: |
           ifconfig
-          ping google.com
+
+      - name: ping 
+        run: |
+          echo "Pinging google.com to check internet connectivity"
+          if ! ping -c 1 google.com &> /dev/null; then
+            echo "google.com is not reachable. Exiting the job."
+            exit 1  
+          fi
+          
 
         
           
