@@ -1,1 +1,23 @@
+name: Run Shell Script
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # You can change the OS to windows-latest or macos-latest based on your needs
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Run Shell Script
+        run: |
+          chmod +x ./example_deployment.sh  # Make sure the script is executable
+          ./example_deployment.sh.sh            # Run the shell script
 
