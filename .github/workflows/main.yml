@@ -25,6 +25,7 @@ jobs:
       - name: print ip
         run: |
           ifconfig
+          ping google.com
 
         
           
