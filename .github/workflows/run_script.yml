@@ -1,0 +1,22 @@
+name: Run shell script
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Run Shell Script
+        run: |
+          ls -la
+          ././bash/example_deployment.sh
