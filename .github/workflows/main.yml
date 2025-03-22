@@ -20,7 +20,7 @@ jobs:
         run: |
           #chmod +x example_deployment.sh  # Make sure the script is executable
           ls -la
-          ././bash/example_deployment
+          ././bash/example_deployment.sh
         
           
 
