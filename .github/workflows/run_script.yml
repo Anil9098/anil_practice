@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch
+
 
 jobs:
   run_script:
@@ -17,6 +19,6 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Run Shell Script
-        run: |
+        run: 
           ls -la
           ././bash/example_deployment.sh
