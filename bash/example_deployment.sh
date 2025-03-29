@@ -4,6 +4,12 @@ set -e
 
 #Parameters 
 
+
+ssh -i ~/.ssh/id_rsa ubuntu@13.233.100.250 -y
+
+
+echo "hello "
+
 REPO_URL="https://github.com/Anil9098/Calculator-Web-Application.git"
 IMAGE_NAME="web-app"
 DEFAULT_TAG="latest"

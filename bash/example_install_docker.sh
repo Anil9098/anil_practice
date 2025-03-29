@@ -46,6 +46,7 @@ echo "User added to Docker group.You may need to log out and log back in for thi
 # Verify Docker installation
 docker --version
 
+#container status
 docker ps
 
 
