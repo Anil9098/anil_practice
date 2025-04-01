@@ -7,16 +7,18 @@ node {
     def ansiblePlaybook = 'deploy.yml'
     //def inventoryFile = 'inventory.ini'
 
+
     try {
         stage('Preparation') {
             echo 'Starting deployment process with Ansible'
+            echo "ansible --version"
         }
 
         stage('Run Ansible Playbook') {
             echo 'Running the Ansible Playbook'
 
             // Run the Ansible playbook to handle the deployment
-            sh "ansible-playbook ${ansiblePlaybook}"
+            sh "ansible-playbook ${deploy.yml}"
         }
 
         stage('Post-Deployment') {
@@ -34,4 +36,15 @@ node {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
