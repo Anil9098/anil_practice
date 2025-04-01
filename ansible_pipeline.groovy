@@ -8,9 +8,22 @@ node {
     //def inventoryFile = 'inventory.ini'
 
     try {
+        
+        stage('Install Ansible') {
+            echo 'Checking and installing Ansible if necessary'
+
+            // Set the locale environment variables before running Ansible
+            echo 'Setting locale to en_US.UTF-8'
+            sh """
+                export LC_ALL=en_US.UTF-8
+                export LANG=en_US.UTF-8
+                export LANGUAGE=en_US.UTF-8
+            """
+        }
+        
         stage('Preparation') {
             echo 'Starting deployment process with Ansible'
-            sh "sudo ansible --version"
+            sh "ansible --version"
         }
 
         stage('Run Ansible Playbook') {
@@ -23,6 +36,7 @@ node {
         stage('Post-Deployment') {
             echo 'Deployment process completed.'
         }
+
     } catch (Exception e) {
         currentBuild.result = 'FAILURE'
         throw e
