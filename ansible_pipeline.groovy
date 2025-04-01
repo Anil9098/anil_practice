@@ -7,11 +7,10 @@ node {
     def ansiblePlaybook = 'deploy.yml'
     //def inventoryFile = 'inventory.ini'
 
-
     try {
         stage('Preparation') {
             echo 'Starting deployment process with Ansible'
-            sh "ansible --version"
+            sh "sudo ansible --version"
         }
 
         stage('Run Ansible Playbook') {
