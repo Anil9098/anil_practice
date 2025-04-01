@@ -11,21 +11,6 @@ node {
 
         try {
         
-            stage('Install Ansible') {
-                echo 'Checking and installing Ansible if necessary'
-                sh "git --version"
-                sh "python3 --version"
-                sh "ansible --version"
-
-                // Set the locale environment variables before running Ansible
-                echo 'Setting locale to en_US.UTF-8'
-                sh """
-                    export LC_ALL=en_US.UTF-8
-                    export LANG=en_US.UTF-8
-                    export LANGUAGE=en_US.UTF-8
-                """
-            }
-        
             stage('Preparation') {
                 echo 'Starting deployment process with Ansible'
                 sh "ansible --version"
@@ -33,8 +18,8 @@ node {
 
             stage('Run Ansible Playbook') {
                 echo 'Running the Ansible Playbook'
-
                 // Run the Ansible playbook to handle the deployment
+                sh"pwd"
                 sh "ansible-playbook ${deploy.yml}"
             }
 
