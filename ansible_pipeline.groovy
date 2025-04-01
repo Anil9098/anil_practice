@@ -23,7 +23,7 @@ node {
                 echo 'Running the Ansible Playbook'
                 // Run the Ansible playbook to handle the deployment
                 sh"pwd"
-                sh "ansible-playbook $ansiblePlaybook"
+                sh "ansible-playbook deploy.yml"
             }
 
             stage('Post-Deployment') {
