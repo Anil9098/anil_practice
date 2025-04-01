@@ -11,6 +11,9 @@ node {
         
         stage('Install Ansible') {
             echo 'Checking and installing Ansible if necessary'
+            sh "git --version"
+            sh "python3 --version"
+            sh "ansible --version"
 
             // Set the locale environment variables before running Ansible
             echo 'Setting locale to en_US.UTF-8'
