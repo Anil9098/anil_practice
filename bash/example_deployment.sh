@@ -2,7 +2,6 @@
 
 set -e
 
-#Parameters 
 
 REPO_URL="https://github.com/Anil9098/Calculator-Web-Application.git"
 IMAGE_NAME="web-app"
