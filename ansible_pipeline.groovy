@@ -17,6 +17,8 @@ node {
             stage('Preparation') {
                 echo 'Starting deployment process with Ansible'
                 sh "ansible --version"
+                echo " Present working directory"
+                sh "pwd"
             }
 
             stage('Run Ansible Playbook') {
