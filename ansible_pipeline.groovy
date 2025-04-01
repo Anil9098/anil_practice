@@ -11,7 +11,7 @@ node {
     try {
         stage('Preparation') {
             echo 'Starting deployment process with Ansible'
-            echo "ansible --version"
+            sh "ansible --version"
         }
 
         stage('Run Ansible Playbook') {
