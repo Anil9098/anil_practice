@@ -1,19 +1,19 @@
 ---
 
-- name: Clone Calculator-Web-Application repository
+- name: Clone Calculator-Web-Application
   git:
     repo: "{{ repo_url }}"
     dest: "{{ repo_dest }}"
     update: yes
 
-- name: Build Docker image for the web app
+- name: Build Docker image
   docker_image:
     name: "{{ image_name }}"
     build:
       path: "{{ repo_dest }}"
     source: build
 
-- name: Run Docker container from the built image
+- name: Run Docker container 
   docker_container:
     name: "{{ container_name }}"
     image: "{{ image_name }}"
