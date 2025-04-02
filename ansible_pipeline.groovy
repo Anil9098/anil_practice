@@ -7,7 +7,13 @@ node {
             }
 
             stage('git clone') {
-                sh "git clone https://github.com/Anil9098/anil_practice.git"
+                checkout([$class: 'GitSCM',
+	                branches: [[name: '*/master']],  
+                    userRemoteConfigs: [[
+                        url: "https://github.com/Anil9098/anil_practice.git",
+		                credentialsId: "gitCredentialsId"		
+                    ]]
+                ])
             }
 
             stage('ansible version') {
