@@ -20,10 +20,10 @@ node {
                 sh "ansible --version"
             }
 
-            stage('verify docker community') {
-                sh "ansible-galaxy collection install community.docker"
-            }
-            
+            //stage('verify docker community') {
+            //    sh "ansible-galaxy collection install community.docker"
+            //}
+
             stage('execute ansible') {
                 ansiblePlaybook(
                     credentialsId: 'ansiblekey', 
