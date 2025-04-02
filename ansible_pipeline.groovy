@@ -14,22 +14,27 @@ node {
 
         try {
         
-            stage('Preparation') {
-                echo 'Starting deployment process with Ansible'
+            stage('Hello') {
+                echo 'Hello World'
+            }
+
+            stage('git clone') {
+                sh "git clone https://github.com/Anil9098/anil_practice.git"
+            }
+
+            stage('ansible version') {
                 sh "ansible --version"
-                echo " Present working directory"
-                sh "pwd"
             }
 
-            stage('Run Ansible Playbook') {
-                echo 'Running the Ansible Playbook'
-                // Run the Ansible playbook to handle the deployment
-                sh"pwd"
-                sh "ansible-playbook deploy.yml"
-            }
-
-            stage('Post-Deployment') {
-                echo 'Deployment process completed.'
+            stage('execute ansible') {
+                ansiblePlaybook(
+                    credentialsId: 'ansiblekey', 
+                    disableHostKeyChecking: true, 
+                    installation: 'ansible', 
+                    inventory: 'anil_practice/ansible_project/inventory.ini', 
+                    playbook: 'anil_practice/ansible_project/deploy.yml', 
+                    vaultTmpPath: ''
+                )
             }
 
         } catch (Exception e) {
@@ -46,7 +51,6 @@ node {
     }
 
 }
-
 
 
 
