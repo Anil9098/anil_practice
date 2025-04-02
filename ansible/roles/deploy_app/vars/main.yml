@@ -1,0 +1,6 @@
+---
+# Default variables
+repo_url: "https://github.com/Anil9098/Calculator-Web-Application.git"
+repo_dest: "/home/ubuntu/Calculator-Web-Application"
+image_name: "web_app"
+container_name: "app_container"
