@@ -1,0 +1,6 @@
+---
+- name: Deploy web app on EC2 instances
+  hosts: web_servers
+  become: yes
+  roles:
+    - deploy_app 
