@@ -1,10 +1,6 @@
 node {
 
         try {
-        
-            stage('Hello') {
-                echo 'Hello World'
-            }
 
             stage('git clone') {
                 checkout([$class: 'GitSCM',
@@ -45,8 +41,23 @@ node {
             } else {
                 echo 'Deployment failed!'
             }
+    
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
