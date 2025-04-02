@@ -37,12 +37,12 @@ node {
         } finally {
             // Notify or handle any post-process, like sending notifications
             if (currentBuild.result == 'SUCCESS') {
-                echo 'Deployment was successful!'
+                echo 'Deployment successful!'
             } else {
                 echo 'Deployment failed!'
             }
     
-    }
+        }      
 }
 
 
