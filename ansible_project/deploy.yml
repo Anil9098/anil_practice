@@ -1,24 +1,18 @@
 ---
-- name: Deploy web app on  EC2 instances
+- name: Deploy web app on EC2 instances
   hosts: web_servers
-  become: yes         
+  become: yes
   tasks:
 
-    - name: Remove old application directory
-      command:
-        cmd: rm -rf /home/ubuntu/anil_practice
-        removes: /home/ubuntu/anil_practice
-
-    - name: Clone the repository
+    - name: Clone the repository and deploy
       git:
         repo: https://github.com/Anil9098/anil_practice.git
         dest: /home/ubuntu/anil_practice
         version: master
+        force: yes
 
     - name: Run deployment script
-      shell: |
-        cd /home/ubuntu/anil_practice/bash
-        ./example_deployment.sh
+      shell: ./example_deployment.sh
       args:
         chdir: /home/ubuntu/anil_practice/bash
 
