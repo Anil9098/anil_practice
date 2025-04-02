@@ -16,6 +16,7 @@ node {
                 ])
             }
 
+
             stage('ansible version') {
                 sh "ansible --version"
             }
@@ -25,8 +26,8 @@ node {
                     credentialsId: 'ansiblekey', 
                     disableHostKeyChecking: true, 
                     installation: 'ansible', 
-                    inventory: 'anil_practice/ansible_project/inventory.ini', 
-                    playbook: 'anil_practice/ansible_project/deploy.yml', 
+                    inventory: 'ansible_project/inventory.ini', 
+                    playbook: 'ansible_project/deploy.yml', 
                     vaultTmpPath: ''
                 )
             }
