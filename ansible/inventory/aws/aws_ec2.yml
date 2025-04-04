@@ -1,9 +1,9 @@
 plugin: aws_ec2
 regions:
-  - ap-south-1  # Replace this with your region, e.g., us-west-2
+  - ap-south-1  
 keyed_groups:
-  - key: tags.Name   # Group instances by the 'Name' tag (optional)
-    prefix: tag      # Prefix for group names (optional)
+  - key: tags.Name  
+    prefix: tag      
 hostnames:
-  - ip-address         # Use DNS name as the hostname (can also be 'private-ip' or 'public-ip')
+  - ip-address        
 ansible_user: ubuntu
