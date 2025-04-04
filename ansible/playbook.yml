@@ -1,6 +1,6 @@
 ---
 - name: Deploy web app on EC2 instance
-  hosts: tag_test
+  hosts: all
   vars:
     ansible_user: ubuntu
   gather_facts: no
