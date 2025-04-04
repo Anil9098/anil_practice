@@ -1,7 +1,7 @@
 node {
 
     try {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_credentials']]) {
+        //withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_credentials']]) {
         
             stage('git clone') {
                 checkout([$class: 'GitSCM',
@@ -35,7 +35,7 @@ node {
                     vaultTmpPath: ''
                 )
             }
-        }
+        //}
 
     } catch (Exception e) {
         currentBuild.result = 'FAILURE'
