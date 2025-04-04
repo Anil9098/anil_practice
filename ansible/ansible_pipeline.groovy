@@ -23,7 +23,6 @@ node {
 
             stage('aws CLI verification') {
                 sh "aws --version"
-                sh "aws configure"
             }
 
             stage('execute ansible') {
@@ -37,7 +36,7 @@ node {
                 )
             }
         }
-        
+
     } catch (Exception e) {
         currentBuild.result = 'FAILURE'
         throw e
