@@ -25,7 +25,7 @@ node {
                     credentialsId: 'ansiblekey', 
                     disableHostKeyChecking: true, 
                     installation: 'ansible', 
-                    inventory: 'ansible/inventory/inventory.ini', 
+                    inventory: 'ansible/inventory/aws/aws_ec2.yml', 
                     playbook: 'ansible/playbook.yml', 
                     vaultTmpPath: ''
                 )
@@ -44,6 +44,7 @@ node {
     
         }      
 }
+
 
 
 
