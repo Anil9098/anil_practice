@@ -20,6 +20,11 @@ node {
             sh "ansible-galaxy collection install amazon.aws"
         }
 
+        stage('aws CLI verification') {
+            sh "aws --version"
+            sh "aws configure"
+        }
+
         stage('execute ansible') {
             ansiblePlaybook(
                 credentialsId: 'ansiblekey', 
