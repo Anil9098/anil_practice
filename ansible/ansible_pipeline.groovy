@@ -1,7 +1,6 @@
 node {
-
     try {
-        //withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_credentials']]) {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_credentials']]) {
         
             stage('git clone') {
                 checkout([$class: 'GitSCM',
@@ -35,20 +34,16 @@ node {
                     vaultTmpPath: ''
                 )
             }
-        //}
+        }
 
     } catch (Exception e) {
         currentBuild.result = 'FAILURE'
         throw e
     } finally {
-            // Notify or handle any post-process, like sending notifications
-        if (currentBuild.result == 'SUCCESS') {
-            echo 'Deployment successful!'
-        } else {
-            echo 'Deployment failed!'    
-        } 
+        echo "pipeline completd"
     }      
 }
+
 
 
 
