@@ -6,12 +6,6 @@
     dest: "{{ repo_dest }}"
     update: yes
 
-- name: Install docker
-  shell: apt install docker.io
-
-- name: permissions
-  shell: cd /var/run && chmod 777 docker.sock
-
 - name: Build Docker image
   docker_image:
     name: "{{ image_name }}"
@@ -35,43 +29,6 @@
   register: ps_output
 
 - name: Show the list of running containers
-  debug:
-- name: Clone Calculator-Web-Application
-  git:
-    repo: "{{ repo_url }}"
-    dest: "{{ repo_dest }}"
-    update: yes
-
-- name: Install docker
-  shell: apt install docker.io
-
-- name: permissions
-  shell: cd /var/run && chmod 777 docker.sock
-
-- name: Build Docker image
-  docker_image:
-    name: "{{ image_name }}"
-    build:
-      path: "{{ repo_dest }}"
-    source: build
-
-- name: Run Docker container
-  docker_container:
-    name: "{{ container_name }}"
-    image: "{{ image_name }}"
-    state: started
-    exposed_ports:
-      - "5000"
-    published_ports:
-      - "5000:5000"
-    detach: yes
-
-- name: Verify running containers
-  command: docker ps
-  register: ps_output
-
-
-- name: Show running container
   debug:
     msg: "{{ ps_output.stdout }}"
 
