@@ -70,7 +70,9 @@
   command: docker ps
   register: ps_output
 
-- name: Show t
+
+- name: Show running container
+  debug:
     msg: "{{ ps_output.stdout }}"
 
 
