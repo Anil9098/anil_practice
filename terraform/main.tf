@@ -72,6 +72,7 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
+
 # 7. Create EC2 Instance within the VPC
 resource "aws_instance" "example" {
   ami           = var.ami_id
@@ -80,21 +81,19 @@ resource "aws_instance" "example" {
   subnet_id     = aws_subnet.main.id
   security_groups = [aws_security_group.allow_ssh.id]
 
-  user_data = file("file.sh")
 
   tags = {
-    Name = "Test"
+    Name = "web"
   }
 
-  # Enable detailed monitoring
-  monitoring = true
+  #Enable detailed monitoring
+  #monitoring = true
 }
 
 
-# s3 bucket creation
+#s3 bucket creation
 resource "aws_s3_bucket" "my_bucket" {
         bucket = "terra-bucket666"
-	acl    = "private"
 
 	versioning {
 	  enabled = true
@@ -102,6 +101,13 @@ resource "aws_s3_bucket" "my_bucket" {
 }
 
 
+#fetch an ec2
+data "aws_instances" "example" {
+     filter {
+	name   = "tag:Name" 
+	values = ["test"]
+     }
+}
 
 
 

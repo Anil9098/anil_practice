@@ -1,6 +1,6 @@
 output "instance_public_ip" {
   description = "public IP of the EC2 instance"
-  value       = aws_instance.example.public_ip
+  value       = data.aws_instances.example.public_ips
 }
 
 output "instance_id" {
@@ -16,8 +16,6 @@ output "vpc_id" {
 output "ec2_instance_arn" {
   value = aws_instance.example.arn
 }
-
-
 
 
 
