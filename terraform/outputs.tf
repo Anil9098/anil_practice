@@ -18,6 +18,11 @@ output "ec2_instance_arn" {
 }
 
 
+output "ami_id" {
+  value = data.aws_ami.ubuntu.id
+}
+
+
 
 
 

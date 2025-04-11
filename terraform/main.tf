@@ -1,7 +1,7 @@
 # 1.Create the VPC
 resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr
-  enable_dns_support = true
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
@@ -14,7 +14,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "main" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.subnet_cidr
-  availability_zone       = "ap-south-1a"  
+  availability_zone       = "ap-south-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -57,17 +57,21 @@ resource "aws_security_group" "allow_ssh" {
   description = "Allow SSH inbound traffic"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  
+  dynamic "ingress" {
+    for_each = [22, 80, 443]
+    iterator = port
+    content {
+      from_port   = port.value
+      to_port     = port.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" 
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -75,13 +79,13 @@ resource "aws_security_group" "allow_ssh" {
 
 # 7. Create EC2 Instance within the VPC
 resource "aws_instance" "example" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-  subnet_id     = aws_subnet.main.id
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = var.instance_type
+  key_name        = var.key_name
+  subnet_id       = aws_subnet.main.id
   security_groups = [aws_security_group.allow_ssh.id]
 
-
+  #user_data = file("file.sh")
   tags = {
     Name = "web"
   }
@@ -93,21 +97,60 @@ resource "aws_instance" "example" {
 
 #s3 bucket creation
 resource "aws_s3_bucket" "my_bucket" {
-        bucket = "terra-bucket666"
+  bucket = "terra-bucket666"
 
-	versioning {
-	  enabled = true
-	}
+  versioning {
+    enabled = true
+  }
 }
 
 
 #fetch an ec2
 data "aws_instances" "example" {
-     filter {
-	name   = "tag:Name" 
-	values = ["test"]
-     }
+  filter {
+    name   = "tag:Name"
+    values = ["test"]
+  }
 }
+
+
+
+resource "null_resource" "post_config" {
+  connection {
+    type        = "ssh"
+    host        = aws_instance.example.public_ip
+    user        = "ubuntu"
+    private_key = file("/home/ncs/Downloads/ansiblekey.pem")
+  }
+  provisioner "file" {
+    source      = "/home/ncs/Anil/web_app_deploy_script/bash/example_deployment.sh"
+    destination = "/tmp/example_deployment.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/example_deployment.sh",
+      "sudo /tmp/example_deployment.sh"
+    ]
+  }
+
+
+  triggers = {
+    instance_id = aws_instance.example.id
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
