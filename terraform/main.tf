@@ -94,7 +94,7 @@ resource "aws_instance" "example" {
   #monitoring = true
 }
 
-
+ 
 #s3 bucket creation
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "terra-bucket666"
@@ -136,7 +136,7 @@ resource "null_resource" "post_config" {
 
 
   triggers = {
-    instance_id = aws_instance.example.id
+    instance_id = length(aws_instance.example.id) > 0 ? "instance created" : "not created"
   }
 }
 
