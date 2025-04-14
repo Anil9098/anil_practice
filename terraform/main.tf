@@ -5,7 +5,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "MainVPC"
+    Name = "terra_VPC"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "main" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "MainSubnet"
+    Name = "terra_Subnet"
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "MainInternetGateway"
+    Name = "terra_InternetGateway"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_route_table" "main" {
   }
 
   tags = {
-    Name = "MainRouteTable"
+    Name = "terra_RouteTable"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_security_group" "allow_ssh" {
   vpc_id      = aws_vpc.main.id
 
   dynamic "ingress" {
-    for_each = [22, 80, 443]
+    for_each = [22, 80, 443,5000]
     iterator = port
     content {
       from_port   = port.value
@@ -87,7 +87,7 @@ resource "aws_instance" "example" {
 
   #user_data = file("file.sh")
   tags = {
-    Name = "web"
+    Name = "web-server"
   }
 
   #Enable detailed monitoring
@@ -105,61 +105,32 @@ resource "aws_s3_bucket" "my_bucket" {
 }
 
 
-#fetch an ec2
-data "aws_instances" "example" {
-  filter {
-    name   = "tag:Name"
-    values = ["test"]
-  }
-}
 
 
+#resource "null_resource" "post_config" {
+#  connection {
+#    type        = "ssh"
+#    host        = aws_instance.example.public_ip
+#    user        = "ubuntu"
+#    private_key = file("/home/ncs/Downloads/ansiblekey.pem")
+#  }
+#  provisioner "file" {
+#    source      = "/home/ncs/Anil/web_app_deploy_script/bash/example_deployment.sh"
+#    destination = "/tmp/example_deployment.sh"
+#  }
 
-resource "null_resource" "post_config" {
-  connection {
-    type        = "ssh"
-    host        = aws_instance.example.public_ip
-    user        = "ubuntu"
-    private_key = file("/home/ncs/Downloads/ansiblekey.pem")
-  }
-  provisioner "file" {
-    source      = "/home/ncs/Anil/web_app_deploy_script/bash/example_deployment.sh"
-    destination = "/tmp/example_deployment.sh"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/example_deployment.sh",
-      "sudo /tmp/example_deployment.sh"
-    ]
-  }
-
-
-  triggers = {
-    instance_id = length(aws_instance.example.id) > 0 ? "instance created" : "not created"
-  }
-}
+#  provisioner "remote-exec" {
+#    inline = [
+#      "chmod +x /tmp/example_deployment.sh",
+#      "sudo /tmp/example_deployment.sh"
+#    ]
+#  }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#  triggers = {
+#    instance_id = length(aws_instance.example.id) > 0 ? "instance created" : "not created"
+#  }
+#}
 
 
 
