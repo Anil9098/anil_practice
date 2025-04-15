@@ -78,21 +78,21 @@ resource "aws_security_group" "allow_ssh" {
 
 
 # 7. Create EC2 Instance within the VPC
-resource "aws_instance" "example" {
-  ami             = data.aws_ami.ubuntu.id
-  instance_type   = var.instance_type
-  key_name        = var.key_name
-  subnet_id       = aws_subnet.main.id
-  security_groups = [aws_security_group.allow_ssh.id]
-
-  #user_data = file("file.sh")
-  tags = {
-    Name = "web-server"
-  }
+#resource "aws_instance" "example" {
+#  ami             = data.aws_ami.ubuntu.id
+#  instance_type   = var.instance_type
+#  key_name        = var.key_name
+#  subnet_id       = aws_subnet.main.id
+#  security_groups = [aws_security_group.allow_ssh.id]
+#
+#  #user_data = file("file.sh")
+#  tags = {
+#    Name = "web-server"
+#  }
 
   #Enable detailed monitoring
   #monitoring = true
-}
+#}
 
  
 #s3 bucket creation
@@ -103,6 +103,22 @@ resource "aws_s3_bucket" "my_bucket" {
     enabled = true
   }
 }
+
+
+#community module s3
+module "s3_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.15" 
+
+  bucket = "my_bucket895565"
+
+  acl    = "private"
+
+  versioning = {
+    enabled = true
+  }
+}
+
 
 
 
