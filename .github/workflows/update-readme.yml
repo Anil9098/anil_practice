@@ -23,9 +23,6 @@ jobs:
       - name: Extract information from .tf files
         id: extract_info
         run: |
-          # Ensure that the repository is fully fetched
-          git fetch --prune --unshallow
-
           # Get the list of changed files between the current commit and the previous commit
           echo "Extracting relevant info from .tf files"
           
