@@ -8,14 +8,6 @@ output "instance_id" {
   value       = aws_instance.example.id
 }
 
-output "vpc_id" {
-  description = "ID of the VPC"
-  value       = aws_vpc.main.id
-}
-
-
-
-
 
 
 

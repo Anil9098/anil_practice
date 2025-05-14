@@ -36,12 +36,4 @@ data "aws_ami" "ubuntu" {
     values = ["ebs"]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-
-
-
-
+ 
