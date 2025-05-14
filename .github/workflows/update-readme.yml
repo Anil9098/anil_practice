@@ -42,10 +42,17 @@ jobs:
           # Here we will append the list of changed .tf files to the README.md
           echo -e "\n## Terraform Files Changed\n$TF_FILES" >> README.md
 
-      - name: Commit changes to README.md
+      - name: Commit and push changes
+        env:
+          TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name 'anil'
-          git config --global user.email 'anil.kumawat@gmail.com'
+          git config --global user.email 'anil@gmail.com'
+
           git add README.md
-          git commit -m 'Update README with changed Terraform files'
-          git push
+          git commit -m 'Update README with changed Terraform files' || echo "No changes to commit"
+          
+          # Use the token to push
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+          git push origin HEAD:main
+
