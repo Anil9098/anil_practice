@@ -13,7 +13,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1  # Ensures that the workflow fetches just the latest commit
+          fetch-depth: 0  # Fetch full commit history to avoid shallow clone issues
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
@@ -23,13 +23,14 @@ jobs:
       - name: Extract information from .tf files
         id: extract_info
         run: |
-          # Here you can extract information from .tf files.
-          # For now, let's just get the names of the .tf files modified.
-          
+          # Ensure that the repository is fully fetched
+          git fetch --prune --unshallow
+
+          # Get the list of changed files between the current commit and the previous commit
           echo "Extracting relevant info from .tf files"
           
-          # Example: We will extract all the .tf filenames that were changed
-          TF_FILES=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^ | grep '\.tf$')
+          # List files that changed in the most recent commit and contain `.tf` extension
+          TF_FILES=$(git diff --name-only HEAD~1 HEAD | grep '\.tf$')
 
           # Save that list to a variable for use in the next steps
           echo "Changed TF files: $TF_FILES"
