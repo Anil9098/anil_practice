@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - '**/*.tf'  # Triggers on any changes to .tf files
+      
+permissions:
+  contents: write
 
 jobs:
   update-readme:
