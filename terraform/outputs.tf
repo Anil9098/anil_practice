@@ -22,6 +22,9 @@ output "ami_id" {
   value = data.aws_ami.ubuntu.id
 }
 
+output "ec2_instance_arn" {
+  value = aws_instance.example.arn
+}
 
 
 
