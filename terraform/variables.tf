@@ -42,7 +42,11 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-
+variable "key_name" {
+  description = "Key pair for ec2 access"
+  type        = string
+  default     = "ansiblekey"
+}
 
 
 
